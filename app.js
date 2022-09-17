@@ -61,7 +61,7 @@ app.get("/post/:topic", function(req,res){
       res.render("post", {
         title: post.title,
         content: post.content
-      })
+      });
       console.log("Match Found");
     }
   })
