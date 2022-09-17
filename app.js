@@ -17,7 +17,10 @@ let posts =[];
 
 
 app.get("/", function(req, res){
-  res.render("home", {startingContent : homeStartingContent});
+  res.render("home", {
+    startingContent : homeStartingContent,
+    posts: posts
+  });
 });
 
 
@@ -39,12 +42,17 @@ app.post("/compose", function(req, res)
 {
   var post = {
     title: req.body.postTitle,
-    content: req.body.postContent
+    content: req.body.postBody
   }
 
   posts.push(post);
 
   res.redirect("/");
+});
+
+
+app.get("/post/:topic", function(req,res){
+  console.log(req.params.topic);
 })
 
 
@@ -57,7 +65,6 @@ app.post("/compose", function(req, res)
 
 
 
-
-app.listen(3000, function() {
+app.listen("3000", function() {
   console.log("Server started on port 3000");
 });
