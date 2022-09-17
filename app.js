@@ -32,6 +32,11 @@ app.get("/compose", function(req, res){
   res.render("compose");
 })
 
+app.post("/compose", function(req, res)
+{
+  var text = req.body.publishText;
+  console.log(text);
+})
 
 
 
