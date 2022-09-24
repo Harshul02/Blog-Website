@@ -17,7 +17,6 @@ app.use(express.static("public"));
 
 mongoose.connect("mongodb://localhost:27017/blogDB", {useNewUrlParser: true});
 
-let posts =[];
 
 const postSchema = {
   title: String,
@@ -27,9 +26,11 @@ const postSchema = {
 const Post = mongoose.model("Post", postSchema);
 
 app.get("/", function(req, res){
-  res.render("home", {
-    startingContent : homeStartingContent,
-    posts: posts
+  Post.find({}, function(err,posts){
+    res.render("home", {
+      startingContent : homeStartingContent,
+      posts: posts
+    });  
   });
 });
 
@@ -50,12 +51,12 @@ app.get("/compose", function(req, res){
 
 app.post("/compose", function(req, res)
 {
-  var post = {
+  const post = new Post({
     title: req.body.postTitle,
     content: req.body.postBody
-  }
+  });
 
-  posts.push(post);
+  post.save();
 
   res.redirect("/");
 });
